@@ -461,6 +461,31 @@ body {
   }
 }
 
+.btn-moon--sm {
+  padding: 9px 18px;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  box-shadow:
+    0 6px 24px -6px rgba(255, 142, 199, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.35) inset;
+}
+.btn-moon--sm:hover {
+  box-shadow:
+    0 12px 32px -8px rgba(255, 142, 199, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.55) inset;
+}
+
+.btn-moon[disabled],
+.btn-moon:disabled {
+  cursor: not-allowed;
+  opacity: 0.75;
+  transform: none !important;
+}
+.btn-moon[disabled]::after,
+.btn-moon:disabled::after {
+  animation: none;
+}
+
 .btn-ghost {
   display: inline-flex;
   align-items: center;
@@ -559,6 +584,148 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* =====================================================
+   Auth screens · floating label input + feedback
+   ===================================================== */
+.moon-field {
+  position: relative;
+}
+.moon-field__control {
+  width: 100%;
+  padding: 22px 44px 12px 18px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 0.4s, background 0.4s, box-shadow 0.4s;
+}
+.moon-field__control::placeholder {
+  color: transparent;
+}
+.moon-field__control:hover {
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.moon-field__control:focus {
+  border-color: transparent;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow:
+    0 0 0 1px rgba(255, 142, 199, 0.55),
+    0 0 30px -10px rgba(255, 142, 199, 0.5);
+}
+.moon-field__label {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-muted);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  transition:
+    top 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.3s;
+}
+.moon-field__control:focus + .moon-field__label,
+.moon-field__control:not(:placeholder-shown) + .moon-field__label {
+  top: 10px;
+  transform: translateY(0);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  color: var(--moon-rose);
+  text-transform: uppercase;
+}
+.moon-field__underline {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    var(--moon-rose),
+    var(--moon-violet),
+    var(--moon-cyan)
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0.8;
+}
+.moon-field__control:focus ~ .moon-field__underline {
+  transform: scaleX(1);
+}
+.moon-field--error .moon-field__control {
+  border-color: rgba(255, 120, 140, 0.55);
+  box-shadow: 0 0 0 1px rgba(255, 120, 140, 0.45);
+}
+.moon-field--error .moon-field__label {
+  color: #ff93a5;
+}
+.moon-field__toggle {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  color: var(--ink-muted);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.3s, background 0.3s;
+}
+.moon-field__toggle:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.shake {
+  animation: shake 0.55s cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+.spin-moon {
+  display: inline-block;
+  animation: spin-slow 1.2s linear infinite;
+}
+
+.auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-cinzel), serif;
+  font-size: 10px;
+  letter-spacing: 0.5em;
+  color: var(--moon-rose);
+  text-transform: uppercase;
+}
+.auth-eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--moon-rose)
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reveal,
   .reveal[data-variant] {
@@ -575,7 +742,9 @@ body {
   .btn-moon::after,
   .scroll-cue::after,
   .text-gradient-moon,
-  .text-gradient-aurora {
+  .text-gradient-aurora,
+  .shake,
+  .spin-moon {
     animation: none !important;
   }
 }

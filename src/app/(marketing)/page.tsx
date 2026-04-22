@@ -432,10 +432,14 @@ export default function HomePage() {
                   留下一个愿望，Cresselia 将在下一个新月，为你织出第一支好梦成片。
                 </p>
                 <form
+                  method="GET"
+                  action="/register"
                   className="relative mx-auto mt-10 flex max-w-md flex-col sm:flex-row gap-3"
                 >
                   <input
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="你的邮箱，像许愿一般留下"
                     className="flex-1 rounded-full bg-white/5 border border-white/10 px-5 py-3 text-sm text-white placeholder:text-[color:var(--ink-muted)] outline-none focus:border-[color:var(--moon-rose)]/60 focus:bg-white/10 transition"
                     required

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const NAV = [
@@ -54,10 +55,14 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <a href="#awaken" className="btn-ghost hidden sm:inline-flex text-xs">
-          <span>召唤新月</span>
+        <Link
+          href="/login"
+          className="btn-moon btn-moon--sm inline-flex"
+          aria-label="登录 Cresselia"
+        >
+          <span>登 录</span>
           <Arrow />
-        </a>
+        </Link>
       </div>
     </header>
   );
