@@ -110,7 +110,7 @@ export function Hero() {
         </p>
 
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
-          <a href="#awaken" className="btn-moon">
+          <a href="/register" className="btn-moon">
             召唤新月
             <SparkleIcon />
           </a>

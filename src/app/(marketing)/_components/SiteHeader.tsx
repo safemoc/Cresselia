@@ -60,7 +60,7 @@ export function SiteHeader() {
           className="btn-moon btn-moon--sm inline-flex"
           aria-label="登录 Cresselia"
         >
-          <span>登 录</span>
+          <span>归 梦</span>
           <Arrow />
         </Link>
       </div>
