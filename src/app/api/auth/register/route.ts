@@ -3,7 +3,6 @@ import { NextResponse } from "next/server";
 import { serverHttp } from "@/lib/api/server";
 import {
   extractTokens,
-  stripTokens,
   writeSessionCookies,
 } from "@/lib/api/auth-cookies";
 import type { RegisterInput } from "@/lib/api";
@@ -16,9 +15,8 @@ export const runtime = "nodejs";
 /**
  * POST /api/auth/register
  *
- * 代理到 axum `/auth/register`。
- * 若 axum 注册后直接返回 token（自动登录），同时写入 cookie；
- * 否则仅返回用户资料，由前端自行跳转到 /login。
+ * 代理到 axum `/client/user/register`。
+ * 注册成功后会尝试自动调用登录接口，把 access token 写入 cookie。
  */
 export async function POST(request: Request) {
   try {
@@ -26,15 +24,36 @@ export async function POST(request: Request) {
 
     const upstream = await serverHttp.post<
       Record<string, unknown>,
-      RegisterInput
-    >("/auth/register", body, { skipAuth: true });
+      { email: string; code: string; password: string }
+    >(
+      "/client/user/register",
+      {
+        email: body.email,
+        code: body.code,
+        password: body.password,
+      },
+      { skipAuth: true }
+    );
 
-    const tokens = extractTokens(upstream);
-    if (tokens.accessToken) {
-      await writeSessionCookies(tokens, false);
+    try {
+      const loginPayload = await serverHttp.post<
+        Record<string, unknown>,
+        { account: string; password: string }
+      >(
+        "/client/user/login",
+        { account: body.email, password: body.password },
+        { skipAuth: true }
+      );
+
+      const tokens = extractTokens(loginPayload);
+      if (tokens.accessToken) {
+        await writeSessionCookies(tokens, false);
+      }
+    } catch {
+      // 注册已成功，自动登录失败时仅返回注册结果，让前端后续自行处理。
     }
 
-    return NextResponse.json(stripTokens(upstream));
+    return NextResponse.json(upstream);
   } catch (err) {
     return toErrorResponse(err);
   }

@@ -9,6 +9,9 @@ export {
   type Api,
   type UserProfile,
   type LoginInput,
+  type LoginResponse,
+  type SendRegisterCodeInput,
+  type SendRegisterCodeResponse,
   type RegisterInput,
-  type AuthResponse,
+  type RegisterResponse,
 } from "./endpoints";

@@ -29,14 +29,32 @@ export interface LoginInput {
   remember?: boolean;
 }
 
-export interface RegisterInput {
-  email: string;
-  password: string;
-  nickname?: string;
+export interface LoginResponse {
+  user_id: number;
+  token_type?: string;
 }
 
-export interface AuthResponse {
-  user: UserProfile;
+export interface SendRegisterCodeInput {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export interface SendRegisterCodeResponse {
+  message: string;
+}
+
+export interface RegisterInput {
+  username?: string;
+  email: string;
+  code: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  user_id: number;
+  username: string;
+  email: string;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -46,10 +64,16 @@ export interface AuthResponse {
 export const api = {
   auth: {
     login: (body: LoginInput) =>
-      http.post<AuthResponse, LoginInput>("/api/auth/login", body),
+      http.post<LoginResponse, LoginInput>("/api/auth/login", body),
+
+    sendRegisterCode: (body: SendRegisterCodeInput) =>
+      http.post<SendRegisterCodeResponse, SendRegisterCodeInput>(
+        "/api/auth/register/send-code",
+        body
+      ),
 
     register: (body: RegisterInput) =>
-      http.post<AuthResponse, RegisterInput>("/api/auth/register", body),
+      http.post<RegisterResponse, RegisterInput>("/api/auth/register", body),
 
     me: () => http.get<UserProfile>("/api/auth/me"),
 

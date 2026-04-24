@@ -16,16 +16,19 @@ export const runtime = "nodejs";
 /**
  * POST /api/auth/login
  *
- * 代理到 axum `/auth/login`。
- * 成功后把 token 写入 httpOnly cookie，浏览器只能看到 `{ user }`。
+ * 代理到 axum `/client/user/login`。
+ * 前端仍然提交 email；BFF 在这里映射到后端需要的 `account` 字段。
  */
 export async function POST(request: Request) {
   try {
     const body = await readJson<LoginInput>(request);
 
-    const upstream = await serverHttp.post<Record<string, unknown>, LoginInput>(
-      "/auth/login",
-      body,
+    const upstream = await serverHttp.post<
+      Record<string, unknown>,
+      { account: string; password: string }
+    >(
+      "/client/user/login",
+      { account: body.email, password: body.password },
       { skipAuth: true }
     );
 

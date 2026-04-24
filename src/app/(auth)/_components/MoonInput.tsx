@@ -82,11 +82,7 @@ export const MoonInput = forwardRef<HTMLInputElement, MoonInputProps>(
             {revealed ? <EyeOff /> : <Eye />}
           </button>
         ) : null}
-        {adornment ? (
-          <div className="moon-field__toggle" aria-hidden>
-            {adornment}
-          </div>
-        ) : null}
+        {adornment ? <div className="moon-field__adornment">{adornment}</div> : null}
 
         {error ? (
           <p
