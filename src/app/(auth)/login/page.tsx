@@ -20,7 +20,7 @@ export default async function LoginPage({
   const rawFrom = Array.isArray(sp.from) ? sp.from[0] : sp.from;
   const from = sanitizeFrom(rawFrom);
 
-  return <LoginForm redirectTo={from ?? "/"} />;
+  return <LoginForm redirectTo={from ?? "/home"} />;
 }
 
 /** 只允许相对路径，防止开放重定向。 */

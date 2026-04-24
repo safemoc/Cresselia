@@ -148,7 +148,7 @@ export function RegisterForm({ initialEmail }: { initialEmail: string }) {
         code,
         password,
       });
-      router.push("/");
+      router.push("/home");
       router.refresh();
     } catch (err) {
       const message =

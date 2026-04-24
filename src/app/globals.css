@@ -756,4 +756,217 @@ body {
   .spin-moon {
     animation: none !important;
   }
+  .dream-avatar-menu {
+    animation: none !important;
+  }
+  .hero-dust,
+  .hero-crescent,
+  .dream-composer-aura::before,
+  .dream-composer-aura::after {
+    animation: none !important;
+  }
+}
+
+/* =====================================================
+   梦乡 /home — 工作台
+   ===================================================== */
+.hero-crescent {
+  filter:
+    drop-shadow(0 0 30px rgba(255, 142, 199, 0.32))
+    drop-shadow(0 0 70px rgba(122, 216, 255, 0.14));
+}
+
+.hero-constellation {
+  filter: drop-shadow(0 0 16px rgba(183, 143, 255, 0.18));
+}
+
+.hero-dust {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.05) 38%,
+    transparent 72%
+  );
+  filter: blur(8px);
+  animation: dust-drift 12s ease-in-out infinite;
+}
+
+@keyframes dust-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(0.92);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(14px, -18px, 0) scale(1.05);
+    opacity: 0.72;
+  }
+}
+
+.dream-composer-aura {
+  position: relative;
+  border-radius: 9999px;
+  isolation: isolate;
+}
+
+.dream-composer-aura::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 142, 199, 0) 0deg,
+    rgba(255, 142, 199, 0.55) 70deg,
+    rgba(183, 143, 255, 0.6) 160deg,
+    rgba(122, 216, 255, 0.55) 250deg,
+    rgba(255, 142, 199, 0) 360deg
+  );
+  filter: blur(18px);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  animation: aura-spin 5.5s linear infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.dream-composer-aura::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  padding: 3px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255, 255, 255, 0) 0deg,
+    #ff8ec7 60deg,
+    #b78fff 150deg,
+    #7ad8ff 240deg,
+    rgba(255, 255, 255, 0) 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  animation: aura-spin 4s linear infinite;
+  pointer-events: none;
+}
+
+.dream-composer-aura[data-active="true"]::before {
+  opacity: 0.9;
+}
+
+.dream-composer-aura[data-active="true"]::after {
+  opacity: 1;
+}
+
+@keyframes aura-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dream-composer-shell:focus-within {
+  border-color: rgba(255, 142, 199, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(255, 142, 199, 0.25),
+    0 0 40px -12px rgba(255, 142, 199, 0.35);
+}
+
+.dream-upload-chip {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.anchor-offset {
+  scroll-margin-top: 96px;
+}
+
+@keyframes dream-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dream-avatar-menu {
+  animation: dream-menu-in 0.2s ease-out;
+}
+
+.dream-rail-tooltip {
+  pointer-events: none;
+}
+
+.dream-star {
+  position: fixed;
+  z-index: 60;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow:
+    0 0 14px rgba(255, 255, 255, 0.9),
+    0 0 28px rgba(255, 200, 230, 0.78);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.dream-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -56px;
+  width: 60px;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0),
+    rgba(255, 220, 240, 0.7),
+    rgba(255, 255, 255, 0.95)
+  );
+  opacity: 0;
+  filter: blur(0.5px);
+}
+
+.dream-star--spawn {
+  box-shadow:
+    0 0 22px rgba(255, 255, 255, 0.95),
+    0 0 48px rgba(255, 200, 230, 0.85),
+    0 0 90px rgba(183, 143, 255, 0.55);
+}
+
+.dream-star--meteor::after {
+  opacity: 1;
+}
+
+.dream-arrived-flash {
+  animation: dream-arrived-flash 0.6s ease-out;
+}
+
+@keyframes dream-arrived-flash {
+  0% {
+    filter: brightness(1);
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
+  40% {
+    filter: brightness(1.24);
+    text-shadow:
+      0 0 16px rgba(255, 255, 255, 0.45),
+      0 0 30px rgba(255, 142, 199, 0.25);
+  }
+  100% {
+    filter: brightness(1);
+    text-shadow: 0 0 0 rgba(255, 255, 255, 0);
+  }
 }
